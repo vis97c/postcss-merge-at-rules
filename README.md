@@ -16,14 +16,13 @@
 
 ## Table of Contents
 
--   [Example](#examples)
+-   [Example](#example)
 -   [Install](#install)
 -   [Usage](#usage)
 -   [Options](#options)
-    -   [sort](#sort)
-    -   [Custom sort function](#custom-sort-function)
-    -   [Sort configuration](#sort-configuration)
-    -   [Only Top Level](#only-top-level)
+    -   [At Rule Pattern](#at-rule-pattern)
+    -   [Merge](#merge)
+    -   [Nest](#nest)
 -   [Changelog](#changelog)
 -   [License](#license)
 -   [Other PostCSS plugins](#other-postcss-plugins)
@@ -38,9 +37,14 @@
 	.header {
 		color: #cdcdcd;
 	}
+	@layer defaults {
+		.header {
+			color: #1c1c1c;
+		}
+	}
 }
 @media screen and (min-width: 760px) {
-	.desktop-first {
+	.button {
 		color: #cdcdcd;
 	}
 }
@@ -48,9 +52,14 @@
 	.main {
 		color: #cdcdcd;
 	}
+	@layer defaults {
+		.main {
+			color: #1c1c1c;
+		}
+	}
 }
 @media screen and (min-width: 1280px) {
-	.desktop-first {
+	.button {
 		color: #cdcdcd;
 	}
 }
@@ -69,31 +78,41 @@
 **after**
 
 ```css
-@media screen and (max-width: 760px) {
-	.footer {
-		color: #cdcdcd;
+@media screen {
+	@media (max-width: 760px) {
+		.footer {
+			color: #cdcdcd;
+		}
 	}
-}
-@media screen and (width < 640px) {
-	/* combined */
-	.header {
-		color: #cdcdcd;
+	@media (width < 640px) {
+		/* combined */
+		.header {
+			color: #cdcdcd;
+		}
+		@layer defaults {
+			.header {
+				color: #1c1c1c;
+			}
+			.main {
+				color: #1c1c1c;
+			}
+		}
+		.main {
+			color: #cdcdcd;
+		}
+		.footer {
+			color: #cdcdcd;
+		}
 	}
-	.main {
-		color: #cdcdcd;
+	@media (min-width: 760px) {
+		.button {
+			color: #cdcdcd;
+		}
 	}
-	.footer {
-		color: #cdcdcd;
-	}
-}
-@media screen and (min-width: 760px) {
-	.desktop-first {
-		color: #cdcdcd;
-	}
-}
-@media screen and (min-width: 1280px) {
-	.desktop-first {
-		color: #cdcdcd;
+	@media (min-width: 1280px) {
+		.button {
+			color: #cdcdcd;
+		}
 	}
 }
 ```
@@ -118,22 +137,20 @@ If you already use PostCSS, add the plugin to plugins list:
 module.exports = {
   plugins: [
 +   require('postcss-merge-at-rules')({
-+     sort: 'mobile-first', // default value
++     nest: true,
 +   }),
     require('autoprefixer')
   ]
 }
 ```
 
-or with custom sort function
+or with custom at rule matching
 
 ```diff
 module.exports = {
   plugins: [
 +   require('postcss-merge-at-rules')({
-+     sort: function(a, b) {
-+        // custom sorting function
-+     }
++     atRulePattern: 'layer'
 +   }),
     require('autoprefixer')
   ]
@@ -145,102 +162,38 @@ and set this plugin in settings.
 
 ## Options
 
-> Sorting works based on [dutchenkoOleg/sort-css-media-queries](https://github.com/dutchenkoOleg/sort-css-media-queries) function.
+### At Rule Pattern
 
-### sort
-
-This option support **string** or **function** values.
-
--   `{string}` `'mobile-first'` - (default) mobile first sorting
--   `{string}` `'desktop-first'` - desktop first sorting
--   `{function}` your own sorting function
-
-#### `'mobile-first'`
+String or regex expresion to math CSS at rules
 
 ```js
-postcss([
-	sortMediaQueries({
-		sort: "mobile-first", // default
+require("postcss")([
+	require("postcss-merge-at-rules")({
+		atRulePattern: /(media|layer|supports)/im, // default value
 	}),
 ]).process(css);
 ```
 
-#### `'desktop-first'`
+### Merge
+
+Merge (without sorting) any valid CSS at rule.
 
 ```js
-postcss([
-	sortMediaQueries({
-		sort: "desktop-first",
+require("postcss")([
+	require("postcss-merge-at-rules")({
+		merge: true, // default value
 	}),
 ]).process(css);
 ```
 
-### Custom sort function
+### Nest
+
+Nest compatible CSS at rules (media, container) within each other when possible.
 
 ```js
-postcss([
-	sortMediaQueries({
-		function(a, b) {
-			return a.localeCompare(b);
-		},
-	}),
-]).process(css);
-```
-
-In this example, all your media queries will sort by A-Z order.
-
-This sorting function is directly passed to Array#sort() method of an array of all your media queries.
-
-### Sort configuration
-
-By this configuration you can control sorting behaviour.
-
-```js
-postcss([
-	sortMediaQueries({
-		configuration: {
-			unitlessMqAlwaysFirst: true, // or false
-		},
-	}),
-]).process(css);
-```
-
-Or alternatively create a `sort-css-mq.config.json` file in the root of your project. Or add property `sortCssMQ: {}` in your `package.json`.
-
-### Only Top Level
-
-Sort only top level media queries to prevent eject nested media queries from parent node
-
-```js
-postcss([
-	sortMediaQueries({
-		onlyTopLevel: true,
-	}),
-]).process(css);
-```
-
-### Cascade Layer, Scope & Supports
-
-Merge (without sorting) cascade layers, scope and support rules as well.
-
-```js
-postcss([
-	sortMediaQueries({
-		mergeAtRules: true,
-	}),
-]).process(css);
-```
-
-This will only merge the ones that are not nested within selectors
-
-### Nest media queries
-
-Nest compatible top level media queries.
-
-```js
-postcss([
-	sortMediaQueries({
-		nested: true,
+require("postcss")([
+	require("postcss-merge-at-rules")({
+		nest: false, // default value
 	}),
 ]).process(css);
 ```
