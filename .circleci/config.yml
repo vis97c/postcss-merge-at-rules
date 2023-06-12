@@ -1,0 +1,110 @@
+# Javascript Node CircleCI 2.1 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+orbs:
+    node: circleci/node@5.0.0
+defaults: &defaults
+    parallelism: 1
+    working_directory: ~/repo
+    docker:
+        - image: cimg/node:16.19.0
+release: &release
+    steps:
+        - checkout
+        - attach_workspace:
+              at: ~/repo
+        - run:
+              name: Release npm package
+              command: npx semantic-release
+
+jobs:
+    setup:
+        <<: *defaults
+        steps:
+            - checkout
+            # Download and cache dependencies
+            - node/install-packages:
+                  pkg-manager: yarn
+            - persist_to_workspace:
+                  root: ~/repo
+                  paths:
+                      - node_modules
+
+    check_commit_message:
+        <<: *defaults
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ~/repo
+            - run:
+                  name: Define environment variable with lastest commit's message
+                  command: |
+                      echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
+                      source $BASH_ENV
+            - run:
+                  name: Lint commit message
+                  command: echo "$COMMIT_MESSAGE" | npx commitlint
+
+    check_code:
+        <<: *defaults
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ~/repo
+            - run:
+                  name: Eslint check
+                  command: yarn lint
+            - run:
+                  name: Jest tests
+                  command: yarn test
+
+    get_npm_release_version:
+        <<: *defaults
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ~/repo
+            - run:
+                  name: Dry release
+                  command: npx semantic-release --dry-run
+
+    release_to_npm:
+        <<: *defaults
+        <<: *release
+
+workflows:
+    check_and_release_workflow:
+        jobs:
+            - setup
+            - check_commit_message:
+                  requires:
+                      - setup
+            - check_code:
+                  requires:
+                      - check_commit_message
+            - get_npm_release_version:
+                  context: npm-deploy
+                  requires:
+                      - check_code
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - approve_npm_release:
+                  type: approval
+                  requires:
+                      - get_npm_release_version
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - release_to_npm:
+                  context: npm-deploy
+                  requires:
+                      - approve_npm_release
+                  filters:
+                      branches:
+                          only:
+                              - master

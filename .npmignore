@@ -1,0 +1,15 @@
+yarn-error.log
+
+*.test.js
+.travis.yml
+.editorconfig
+.gitattributes
+.github
+index.test.js
+
+CHANGELOG.md
+
+logo.svg
+
+test/
+coverage/
