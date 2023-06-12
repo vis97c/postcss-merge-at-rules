@@ -1,5 +1,12 @@
 PostCSS Merge At Rules
 
+## [1.0.1](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.0.0...v1.0.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* update readme ([01307c8](https://github.com/vis97c/postcss-merge-at-rules/commit/01307c8e12e7eb3e5ca2f5f5687e8eefca81d604))
+
 # 1.0.0 (2023-06-12)
 
 
