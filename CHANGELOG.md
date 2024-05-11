@@ -1,5 +1,12 @@
 PostCSS Merge At Rules
 
+# [1.1.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.0.1...v1.1.0) (2024-05-11)
+
+
+### Features
+
+* flatten at rules conditionally ([b0996cf](https://github.com/vis97c/postcss-merge-at-rules/commit/b0996cf4372d8d8b9cf9a00768d67fca4e1b2068))
+
 ## [1.0.1](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.0.0...v1.0.1) (2023-06-12)
 
 
