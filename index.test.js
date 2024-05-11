@@ -31,31 +31,50 @@ describe("Throw error if options are no correct", () => {
 });
 
 describe("Check merge strategies", () => {
-	test("Do nothing, { merge: false }", async () => {
-		await run("default.in.css", { merge: false });
+	test("Do nothing, { flatten: false, merge: false }", async () => {
+		await run("default.in.css", { flatten: false, merge: false });
 	});
 
-	test("Merge only, {}, Default behavior", async () => {
-		await run("merge.out.css");
+	test("Merge & flatten, {}, Default behavior", async () => {
+		await run("default.out.css");
 	});
 
-	test("Merge layers only, { atRulePattern: 'layer' }", async () => {
-		await run("merge_layers.out.css", { atRulePattern: "layer" });
+	test("Flatten only, { merge: false }", async () => {
+		await run("flatten.out.css", { merge: false });
 	});
 
-	test("Nest only, { merge: false, nest: true }", async () => {
-		await run("nest.out.css", { merge: false, nest: true });
+	test("Merge only, { flatten: false }", async () => {
+		await run("merge.out.css", { flatten: false });
 	});
 
-	test("Nest layers only, { atRulePattern: 'layer', merge: false, nest: true }", async () => {
-		await run("nest_layers.out.css", { atRulePattern: "layer", merge: false, nest: true });
+	test("Merge layers only, { atRulePattern: 'layer', flatten: false }", async () => {
+		await run("merge_layers.out.css", { atRulePattern: "layer", flatten: false });
 	});
 
-	test("Merge and nest, { nest: true }", async () => {
-		await run("merge_nest.out.css", { nest: true });
+	test("Nest only, { flatten: false, merge: false, nest: true }", async () => {
+		await run("nest.out.css", { flatten: false, merge: false, nest: true });
 	});
 
-	test("Merge and nest layers only, { atRulePattern: 'layer', nest: true }", async () => {
-		await run("merge_nest_layers.out.css", { atRulePattern: "layer", nest: true });
+	test("Merge and nest, { flatten: false, nest: true }", async () => {
+		await run("merge_nest.out.css", { flatten: false, nest: true });
+	});
+
+	test("Merge and nest layers only, { atRulePattern: 'layer', flatten: false, nest: true }", async () => {
+		await run("merge_nest_layers.out.css", {
+			atRulePattern: "layer",
+			flatten: false,
+			nest: true,
+		});
+	});
+
+	test("Flatten, merge and nest, { nest: true }", async () => {
+		await run("flatten_merge_nest.out.css", { nest: true });
+	});
+
+	test("Flatten, merge and nest layers only, { atRulePattern: 'layer', nest: true }", async () => {
+		await run("merge_nest_layers.out.css", {
+			atRulePattern: "layer",
+			nest: true,
+		});
 	});
 });

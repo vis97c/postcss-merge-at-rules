@@ -7,11 +7,6 @@
 	.md {
 		color: #000;
 	}
-	@media (hover: hover) {
-		.xs {
-			color: #fff;
-		}
-	}
 	.xl {
 		color: #1abc9c;
 	}
@@ -40,14 +35,6 @@
 @layer defaults {
 	.md {
 		color: #000;
-	}
-	@media only screen and (min-width: 769px) {
-		.sm {
-			color: blue;
-		}
-		.xs {
-			color: #fff;
-		}
 	}
 	.xs {
 		color: #fff;
@@ -103,4 +90,19 @@
 	.md {
 		color: #000;
 	}
+}
+@media only screen and (min-width: 769px) {
+	@layer defaults {
+		.sm {
+			color: blue;
+		}
+		.xs {
+			color: #fff;
+		}
+	}
+}
+@media screen and (orientation: portrait) and (hover: hover) {
+		.xs {
+			color: #fff;
+		}
 }

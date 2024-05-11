@@ -1,112 +1,114 @@
 @media tv {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media screen and (orientation: portrait) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @supports (-moz-appearance: none) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media screen and (min-width: 1280px) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @layer defaults {
-  .md {
-    color: #000;
-  }
-  @media only screen and (min-width: 769px) {
-    .md {
-      color: #000;
-    }
-  }
-  @media only screen and (min-width: 769px) {
-    .md {
-      color: #000;
-    }
-  }
-  .md {
-    color: #000;
-  }
-  @supports (-moz-appearance: none) {
-    .md {
-      color: #000;
-    }
-  }
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
+	@media only screen and (min-width: 769px) {
+		.sm {
+			color: blue;
+		}
+	}
+	@media only screen and (min-width: 769px) {
+		.xs {
+			color: #fff;
+		}
+	}
+	.xs {
+		color: #fff;
+	}
+	@supports (-moz-appearance: none) {
+		.xs {
+			color: #fff;
+		}
+	}
+	.lg {
+		color: red;
+	}
 }
 .md {
-  color: #000;
+	color: #000;
 }
 @supports (-moz-appearance: none) {
-  .md {
-    color: #000;
-  }
+	.xl {
+		color: #1abc9c;
+	}
 }
 @media screen and (max-width: 640px) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media screen and (orientation: landscape) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media print {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @layer modifiers {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media screen and (orientation: portrait) {
-  .md {
-    color: #000;
-  }
-  .md {
-    color: #000;
-  }
+	@media (hover: hover) {
+		.xs {
+			color: #fff;
+		}
+	}
+	.xl {
+		color: #1abc9c;
+	}
 }
 @media screen and (min-width: 768px) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media screen and (min-width: 1280px) {
-  .md {
-    color: #000;
-  }
-  @layer modifiers {
-    .md {
-      color: #000;
-    }
-  }
+	.md {
+		color: #000;
+	}
+	@layer modifiers {
+		.md {
+			color: #000;
+		}
+	}
 }
 @media screen and (width <= 1200px) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media print and (orientation: portrait) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }
 @media (min-width: 577px) and (hover: none) {
-  .md {
-    color: #000;
-  }
+	.md {
+		color: #000;
+	}
 }

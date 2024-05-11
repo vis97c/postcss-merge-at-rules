@@ -1,0 +1,209 @@
+{
+  "root": true,
+  "parserOptions": {
+    "requireConfigFile": false,
+    "sourceType": "module",
+    "ecmaVersion": 2017
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "plugins": [
+    "jsdoc",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:jsdoc/recommended"
+  ],
+  "rules": {
+    "jest/expect-expect": "off",
+    "jsdoc/require-hyphen-before-param-description": [
+      "warn",
+      "always"
+    ],
+    // prettier
+    "prettier/prettier": [
+      "error",
+      {},
+      {
+        "usePrettierrc": true
+      }
+    ],
+    // unicorn
+    "unicorn/number-literal-case": "off",
+    // eslint
+    "no-undef": "off",
+    "curly": [
+      "error",
+      "multi-line"
+    ],
+    "quotes": [
+      "error",
+      "double",
+      {
+        "allowTemplateLiterals": true,
+        "avoidEscape": true
+      }
+    ],
+    "arrow-parens": "off",
+    "comma-dangle": "off",
+    "eqeqeq": [
+      "error",
+      "smart"
+    ],
+    "indent": "off",
+    "no-dupe-class-members": "off",
+    "no-extra-boolean-cast": "off",
+    "no-mixed-spaces-and-tabs": [
+      "warn",
+      "smart-tabs"
+    ],
+    "no-redeclare": "off",
+    "no-tabs": "off",
+    "no-use-before-define": "off",
+    "semi": "off",
+    "space-before-function-paren": "off",
+    "spaced-comment": "off",
+    "padding-line-between-statements": [
+      "error",
+      // require blank before
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "return",
+          "throw",
+          "continue",
+          "debugger"
+        ]
+      },
+      {
+        "blankLine": "never",
+        "prev": [
+          "case",
+          "default"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "const",
+          "let",
+          "var"
+        ]
+      },
+      {
+        "blankLine": "any",
+        "prev": [
+          "const",
+          "let",
+          "var"
+        ],
+        "next": [
+          "const",
+          "let",
+          "var"
+        ]
+      },
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "import"
+      },
+      {
+        "blankLine": "any",
+        "prev": "import",
+        "next": "import"
+      },
+      {
+        "blankLine": "always",
+        "prev": "export",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "export"
+      },
+      {
+        "blankLine": "any",
+        "prev": "export",
+        "next": "export"
+      },
+      {
+        "blankLine": "always",
+        "prev": "if",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "if"
+      },
+      {
+        "blankLine": "any",
+        "prev": "if",
+        "next": "if"
+      },
+      {
+        "blankLine": "always",
+        "prev": "directive",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "directive"
+      },
+      {
+        "blankLine": "any",
+        "prev": "directive",
+        "next": "directive"
+      },
+      {
+        "blankLine": "always",
+        "prev": [
+          "switch",
+          "try",
+          "for",
+          "while",
+          "do",
+          "iife"
+        ],
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": [
+          "switch",
+          "try",
+          "for",
+          "while",
+          "do",
+          "iife"
+        ]
+      }
+    ]
+  }
+}
