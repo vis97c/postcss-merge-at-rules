@@ -8,14 +8,14 @@
 	.md {
 		color: #000;
 	}
-	@media (hover: hover) {
-		.xs {
-			color: #fff;
-		}
-	}
 	.xl {
 		color: #1abc9c;
 	}
+@media (hover: hover) {
+		.xs {
+			color: #fff;
+		}
+		}
 }
 @media (min-width: 1280px) {
 	.md {
@@ -63,14 +63,6 @@
 	.md {
 		color: #000;
 	}
-	@media only screen and (min-width: 769px) {
-		.sm {
-			color: blue;
-		}
-		.xs {
-			color: #fff;
-		}
-	}
 	.xs {
 		color: #fff;
 	}
@@ -105,4 +97,14 @@
 	.md {
 		color: #000;
 	}
+}
+@media only screen and (min-width: 769px) {
+		@layer defaults {
+		.sm {
+			color: blue;
+		}
+		.xs {
+			color: #fff;
+		}
+		}
 }
