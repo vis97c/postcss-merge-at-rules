@@ -43,6 +43,13 @@
 		}
 	}
 }
+@layer reset {
+	@media screen {
+		.picture {
+			display: block;
+		}
+	}
+}
 @media screen and (min-width: 760px) {
 	.button {
 		color: #cdcdcd;
@@ -78,41 +85,46 @@
 **after**
 
 ```css
+@media screen and (max-width: 760px) {
+	.footer {
+		color: #cdcdcd;
+	}
+}
 @media screen {
-	@media (max-width: 760px) {
-		.footer {
-			color: #cdcdcd;
+	@layer reset {
+		.picture {
+			display: block;
 		}
 	}
-	@media (width < 640px) {
-		/* combined */
+}
+@media screen and (width < 640px) {
+	/* combined */
+	.header {
+		color: #cdcdcd;
+	}
+	@layer defaults {
 		.header {
-			color: #cdcdcd;
-		}
-		@layer defaults {
-			.header {
-				color: #1c1c1c;
-			}
-			.main {
-				color: #1c1c1c;
-			}
+			color: #1c1c1c;
 		}
 		.main {
-			color: #cdcdcd;
-		}
-		.footer {
-			color: #cdcdcd;
+			color: #1c1c1c;
 		}
 	}
-	@media (min-width: 760px) {
-		.button {
-			color: #cdcdcd;
-		}
+	.main {
+		color: #cdcdcd;
 	}
-	@media (min-width: 1280px) {
-		.button {
-			color: #cdcdcd;
-		}
+	.footer {
+		color: #cdcdcd;
+	}
+}
+@media screen and (min-width: 760px) {
+	.button {
+		color: #cdcdcd;
+	}
+}
+@media screen and (min-width: 1280px) {
+	.button {
+		color: #cdcdcd;
 	}
 }
 ```
@@ -174,6 +186,18 @@ require("postcss")([
 ]).process(css);
 ```
 
+### Flatten
+
+Flatten (without sorting) any valid CSS at rule. media at rules take precedence
+
+```js
+require("postcss")([
+	require("postcss-merge-at-rules")({
+		flatten: true, // default value
+	}),
+]).process(css);
+```
+
 ### Merge
 
 Merge (without sorting) any valid CSS at rule.
@@ -193,7 +217,7 @@ Nest compatible CSS at rules (media, container) within each other when possible.
 ```js
 require("postcss")([
 	require("postcss-merge-at-rules")({
-		nest: false, // default value
+		nest: true, // false by default
 	}),
 ]).process(css);
 ```
