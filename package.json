@@ -22,12 +22,12 @@
   },
   "homepage": "https://github.com/vis97c/postcss-merge-at-rules",
   "scripts": {
-    "postcss": "postcss test/default.in.css -o test/default.out.css --no-map",
     "lint": "eslint --ext .js --ignore-path .prettierignore .",
-    "test": "jest-ci --coverage",
-    "test:lint": "yarn lint && yarn test",
+    "test:update": "gulp",
+    "test": "yarn lint && jest-ci --coverage",
     "refresh-deps": "rm -rf node_modules && rm package-lock.json && npm i"
   },
+  "packageManager": "yarn@1.22.21",
   "engines": {
     "node": ">=14.0.0"
   },
@@ -43,9 +43,12 @@
     "autoprefixer": "^10.4.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-jsdoc": "^46.2.5",
+    "eslint-plugin-prettier": "^5.0.0",
+    "gulp": "^5.0.0",
+    "gulp-postcss": "9.0.1",
+    "gulp-rename": "^2.0.0",
     "husky": "^7.0.4",
     "jest": "^27.3.1",
     "jest-ci": "^0.1.1",

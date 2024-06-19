@@ -28,6 +28,11 @@
 		.md {
 			color: #000;
 		}
+	@layer modifiers.defaults {
+      .not-lg {
+        font-weight: bold;
+      }
+			}
 	}
 }
 @media (max-width: 640px) {
