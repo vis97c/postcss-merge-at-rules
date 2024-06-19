@@ -78,6 +78,11 @@
 			color: #000;
 		}
 	}
+	@layer modifiers.defaults {
+      .not-lg {
+        font-weight: bold;
+      }
+	}
 }
 @layer defaults {
 	.lg {
