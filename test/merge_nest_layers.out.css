@@ -95,6 +95,11 @@
 		.md {
 			color: #000;
 		}
+    @layer defaults {
+      .not-lg {
+        font-weight: bold;
+      }
+    }
 	}
 }
 @media screen and (width <= 1200px) {

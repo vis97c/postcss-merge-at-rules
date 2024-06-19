@@ -92,6 +92,11 @@
 		.md {
 			color: #000;
 		}
+    @layer defaults {
+      .not-lg {
+        font-weight: bold;
+      }
+    }
 	}
 }
 @layer defaults {
