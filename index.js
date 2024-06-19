@@ -27,12 +27,18 @@ function getParams(query) {
 /**
  * Join params array
  * @param {string[]} paramsArr - AtRule params array
+ * @param {string} name - AtRule name ("media"|"layer")
  * @returns {string} AtRule params
  */
-function joinParams(paramsArr) {
+function joinParams(paramsArr, name = "media") {
 	const params = [...new Set(paramsArr.map((p) => getParams(p)).flat())];
 
-	return params.join(" and ");
+	switch (name) {
+		case "layer":
+			return params.join(".");
+		default:
+			return params.join(" and ");
+	}
 }
 
 /**
@@ -75,6 +81,7 @@ function recursivelyFlattenAtRules(root, localRoot, atRulePattern, helpers) {
 		// cannot flatten if already on root
 		if (localRoot.type === "root") return;
 
+		// media rule nested in non media rule, invert
 		if (atRule.name === "media" && atRule.name !== localRoot.name) {
 			const newMedia = new helpers.AtRule({
 				name: atRule.name,
@@ -92,9 +99,11 @@ function recursivelyFlattenAtRules(root, localRoot, atRulePattern, helpers) {
 			root.append(newMedia);
 		} else {
 			// cannot flatten if incompatible atRulePattern
-			if (atRule.name !== localRoot.name || atRule.name === "layer") return;
+			if (atRule.name !== localRoot.name) return;
 
-			let query = joinParams(sortParams(joinParams([localRoot.params, atRule.params])));
+			// merge media and layers into single rule
+			const queryBase = joinParams([localRoot.params, atRule.params], atRule.name);
+			const query = joinParams(sortParams(queryBase));
 
 			if (localRoot.parent) {
 				localRoot.parent.append(
