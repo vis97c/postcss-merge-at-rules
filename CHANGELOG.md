@@ -1,5 +1,13 @@
 PostCSS Merge At Rules
 
+## [1.1.1](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.1.0...v1.1.1) (2024-06-19)
+
+
+### Bug Fixes
+
+* merge layers ([056d88d](https://github.com/vis97c/postcss-merge-at-rules/commit/056d88d688a31dd4c559794e6ae838ac38cc570a))
+* uptate tests ([dc3018a](https://github.com/vis97c/postcss-merge-at-rules/commit/dc3018a2ed56ca83b65577cb6109e75b7c0f6237))
+
 # [1.1.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.0.1...v1.1.0) (2024-05-11)
 
 
