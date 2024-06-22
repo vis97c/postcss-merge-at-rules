@@ -8,9 +8,6 @@
 	.md {
 		color: #000;
 	}
-	.xl {
-		color: #1abc9c;
-	}
 @media (hover: hover) {
 		.xs {
 			color: #fff;
@@ -21,19 +18,9 @@
 	.md {
 		color: #000;
 	}
-	.md {
-		color: #000;
-	}
-	@layer modifiers {
 		.md {
-			color: #000;
+			color: yellow;
 		}
-	@layer modifiers.defaults {
-      .not-lg {
-        font-weight: bold;
-      }
-			}
-	}
 }
 @media (max-width: 640px) {
 	.md {
@@ -46,15 +33,65 @@
 	}
 }
 @media (min-width: 768px) {
-	.md {
-		color: #000;
-	}
+@media (width < 980px) {
+		.xd {
+			display: flex;
+		}
+		}
+@media (max-width: 1080px) {
 }
-@media (width <= 1200px) {
-	.md {
-		color: #000;
-	}
 }
+@media (min-width: 1080px) {
+	@layer modifiers {
+		.md {
+			color: #000;
+		}
+	@layer modifiers.defaults {
+			.not-lg {
+				font-weight: bold;
+			}
+			}
+	}
+		.md {
+			color: yellow;
+		}
+}
+@media (max-width: 756px) {
+		.md {
+			position: relative;
+		}
+}
+@media (1280px >= width > 576px) {
+		.xl {
+			position: relative;
+		}
+		.xl {
+			position: absolute;
+		}
+}
+@media (576px < height <= 1280px) {
+		.xl {
+			position: relative;
+		}
+		.xl {
+			position: absolute;
+		}
+}
+@media (width <= 1200px) and (width > 576px) {
+		.xd {
+			color: green;
+		}
+}
+@media (min-width: print) and (min-width: 1080px) {
+		.md {
+			color: blueviolet;
+		}
+	}
+@media (width < 980px) {
+		.xd {
+			color: blue;
+		}
+	}
 }
 @supports (-moz-appearance: none) {
 	.md {
@@ -65,12 +102,6 @@
 	}
 }
 @layer defaults {
-	.md {
-		color: #000;
-	}
-	.xs {
-		color: #fff;
-	}
 	@supports (-moz-appearance: none) {
 		.xs {
 			color: #fff;

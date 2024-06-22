@@ -7,9 +7,6 @@
 	.md {
 		color: #000;
 	}
-	.xl {
-		color: #1abc9c;
-	}
 }
 @supports (-moz-appearance: none) {
 	.md {
@@ -23,27 +20,11 @@
 	.md {
 		color: #000;
 	}
-	.md {
-		color: #000;
-	}
-	@layer modifiers {
 		.md {
-			color: #000;
+			color: yellow;
 		}
-	}
-	@layer modifiers.defaults {
-      .not-lg {
-        font-weight: bold;
-      }
-	}
 }
 @layer defaults {
-	.md {
-		color: #000;
-	}
-	.xs {
-		color: #fff;
-	}
 	@supports (-moz-appearance: none) {
 		.xs {
 			color: #fff;
@@ -77,14 +58,44 @@
 	}
 }
 @media screen and (min-width: 768px) {
-	.md {
-		color: #000;
+}
+@media screen and (min-width: 1080px) {
+	@layer modifiers {
+		.md {
+			color: #000;
+		}
 	}
+	@layer modifiers.defaults {
+			.not-lg {
+				font-weight: bold;
+			}
+	}
+		.md {
+			color: yellow;
+		}
+}
+@media screen and (max-width: 756px) {
+		.md {
+			position: relative;
+		}
+}
+@media screen and (1280px >= width > 576px) {
+		.xl {
+			position: relative;
+		}
+		.xl {
+			position: absolute;
+		}
+}
+@media screen and (576px < height <= 1280px) {
+		.xl {
+			position: relative;
+		}
+		.xl {
+			position: absolute;
+		}
 }
 @media screen and (width <= 1200px) {
-	.md {
-		color: #000;
-	}
 }
 @media print and (orientation: portrait) {
 	.md {
@@ -109,5 +120,27 @@
 @media screen and (orientation: portrait) and (hover: hover) {
 		.xs {
 			color: #fff;
+		}
+}
+@media screen and (min-width: 768px) and (width < 980px) {
+		.xd {
+			display: flex;
+		}
+}
+@media screen and (min-width: 768px) and (max-width: 1080px) {
+}
+@media screen and (min-width: print) and (min-width: 1080px) {
+		.md {
+			color: blueviolet;
+		}
+}
+@media screen and (width < 980px) {
+		.xd {
+			color: blue;
+		}
+}
+@media screen and (width <= 1200px) and (width > 576px) {
+		.xd {
+			color: green;
 		}
 }
