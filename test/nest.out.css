@@ -13,26 +13,10 @@
 			color: #fff;
 		}
 	}
-	.xl {
-		color: #1abc9c;
-	}
 }
 @media (min-width: 1280px) {
 	.md {
 		color: #000;
-	}
-	.md {
-		color: #000;
-	}
-	@layer modifiers {
-		.md {
-			color: #000;
-		}
-    @layer defaults {
-      .not-lg {
-        font-weight: bold;
-      }
-    }
 	}
 }
 @media (max-width: 640px) {
@@ -46,13 +30,93 @@
 	}
 }
 @media (min-width: 768px) {
-	.md {
-		color: #000;
+	@media (width < 980px) {
+		.xd {
+			display: flex;
+		}
+	}
+	@media (max-width: 576px) {
+		.xd {
+			display: none;
+		}
+	}
+}
+@media (min-width: 1080px) {
+	@layer modifiers {
+		.md {
+			color: #000;
+		}
+		@layer defaults {
+			.not-lg {
+				font-weight: bold;
+			}
+		}
+	}
+	@media (min-width: print) {
+		.md {
+			color: blueviolet;
+		}
+	}
+	@media (min-width: 1280px) {
+		.md {
+			color: yellow;
+		}
+	}
+	@media (min-width: 980px) {
+		.md {
+			color: yellow;
+		}
+	}
+}
+@media (max-width: 756px) {
+		.md {
+			position: relative;
+		}
+}
+@media (1280px >= width > 576px) {
+	@media (576px >= width > 756px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (400px >= width > 358px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (756px >= width > 576px) {
+		.xl {
+			position: absolute;
+		}
+	}
+}
+@media (576px < height <= 1280px) {
+	@media (756px < width <= 576px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (358px < width <= 400px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (576px < width <= 756px) {
+		.xl {
+			position: absolute;
+		}
 	}
 }
 @media (width <= 1200px) {
-	.md {
-		color: #000;
+	@media (width < 980px) {
+		.xd {
+			color: blue;
+		}
+	}
+	@media (width > 576px) {
+		.xd {
+			color: green;
+		}
 	}
 }
 }
@@ -65,9 +129,6 @@
 	}
 }
 @layer defaults {
-	.md {
-		color: #000;
-	}
 	@media only screen and (min-width: 769px) {
 		.sm {
 			color: blue;
@@ -75,9 +136,6 @@
 		.xs {
 			color: #fff;
 		}
-	}
-	.xs {
-		color: #fff;
 	}
 	@supports (-moz-appearance: none) {
 		.xs {
