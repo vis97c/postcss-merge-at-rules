@@ -1,5 +1,12 @@
 PostCSS Merge At Rules
 
+# [1.2.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.1.1...v1.2.0) (2024-06-22)
+
+
+### Features
+
+* remove invalid queries ([4bb58e5](https://github.com/vis97c/postcss-merge-at-rules/commit/4bb58e5de31c0f3537f3f86126f14b957c517f61))
+
 ## [1.1.1](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.1.0...v1.1.1) (2024-06-19)
 
 
