@@ -1,5 +1,17 @@
 PostCSS Merge At Rules
 
+# [2.0.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.2.0...v2.0.0) (2026-05-04)
+
+
+### Code Refactoring
+
+* improved compilation performance ([efc70bb](https://github.com/vis97c/postcss-merge-at-rules/commit/efc70bbfc09446cffa710e98b24f436d642eb5a2))
+
+
+### BREAKING CHANGES
+
+* Node 20+ is required
+
 # [1.2.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.1.1...v1.2.0) (2024-06-22)
 
 
