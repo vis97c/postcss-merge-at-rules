@@ -1,15 +1,18 @@
+// @ts-check
+
 const gulp = require("gulp");
 const rename = require("gulp-rename");
 const postcss = require("gulp-postcss");
 const plugin = require("./index.js");
 
+/** @type {string[]} */
 const tasks = [];
 
 /**
  * A function to create a Gulp task that processes CSS files using the plugin.
  * @param {string} name - The name of the task.
  * @param {object} options - The options to pass to the plugin.
- * @returns {Function} A Gulp task function.
+ * @returns {[string, gulp.TaskFunction]} A Gulp task function.
  */
 function makeTask(name, options = {}) {
 	const taskName = `${name}_out`;
@@ -49,7 +52,7 @@ gulp.task(
 	})
 );
 gulp.task(...makeTask("flatten_merge_nest", { nest: true }));
-gulp.task(...makeTask("merge_nest_layers", { atRulePattern: "layer", nest: true }));
+gulp.task(...makeTask("flatten_merge_nest_layers", { atRulePattern: "layer", nest: true }));
 
 // makeTask parallel tasks
 gulp.task("default", gulp.parallel(...tasks));

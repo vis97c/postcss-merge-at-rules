@@ -25,11 +25,12 @@
     "lint": "eslint --ext .js --ignore-path .prettierignore .",
     "test:update": "gulp",
     "test": "yarn lint && jest-ci --coverage",
-    "refresh-deps": "rm -rf node_modules && rm package-lock.json && npm i"
+    "refresh-deps": "rm -rf node_modules && rm yarn.lock && yarn"
   },
   "packageManager": "yarn@1.22.21",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.19.3",
+    "yarn": ">=1.22.4"
   },
   "dependencies": {
     "sort-css-media-queries": "2.2.0"
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
+    "@open-xamu-co/eslint-config": "^3.0.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^29.5.2",
@@ -44,7 +46,7 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-jest": "^25.3.0",
-    "eslint-plugin-jsdoc": "^46.2.5",
+    "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-prettier": "^5.0.0",
     "gulp": "^5.0.0",
     "gulp-postcss": "9.0.1",
