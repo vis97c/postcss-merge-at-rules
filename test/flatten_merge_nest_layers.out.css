@@ -1,0 +1,189 @@
+@media tv {
+	.md {
+		color: #000;
+	}
+}
+@media screen and (orientation: portrait) {
+	.md {
+		color: #000;
+	}
+}
+@supports (-moz-appearance: none) {
+	.md {
+		color: #000;
+	}
+}
+@media screen and (min-width: 1280px) {
+	.md {
+		color: #000;
+	}
+}
+@layer defaults {
+	@media only screen and (min-width: 769px) {
+		.sm {
+			color: blue;
+		}
+	}
+	@media only screen and (min-width: 769px) {
+		.xs {
+			color: #fff;
+		}
+	}
+	@supports (-moz-appearance: none) {
+		.xs {
+			color: #fff;
+		}
+	}
+	.lg {
+		color: red;
+	}
+}
+.md {
+	color: #000;
+}
+@supports (-moz-appearance: none) {
+	.xl {
+		color: #1abc9c;
+	}
+}
+@media screen and (max-width: 640px) {
+	.md {
+		color: #000;
+	}
+}
+@media screen and (orientation: landscape) {
+	.md {
+		color: #000;
+	}
+}
+@media print {
+	.md {
+		color: #000;
+	}
+}
+@layer modifiers {
+	.md {
+		color: #000;
+	}
+}
+@media screen and (orientation: portrait) {
+	@media (hover: hover) {
+		.xs {
+			color: #fff;
+		}
+	}
+}
+@media screen and (min-width: 768px) {
+	@media (width < 980px) {
+		.xd {
+			display: flex;
+		}
+	}
+	@media (max-width: 576px) {
+		.xd {
+			display: none;
+		}
+	}
+	@media (max-width: 1080px) {
+		@media (width > 1280px) {
+			.xd {
+				display: block;
+			}
+		}
+	}
+}
+@media screen and (min-width: 769px) and (max-width: 577px) {
+	.db {
+		border: 1px solid transparent;
+	}
+}
+@media screen and (min-width: 1080px) {
+	@layer modifiers {
+		.md {
+			color: #000;
+		}
+		@layer defaults {
+			.not-lg {
+				font-weight: bold;
+			}
+		}
+	}
+	@media (min-width: print) {
+		.md {
+			color: blueviolet;
+		}
+	}
+	@media (min-width: 1280px) {
+		.md {
+			color: yellow;
+		}
+	}
+	@media (min-width: 980px) {
+		.md {
+			color: yellow;
+		}
+	}
+}
+@media screen and (max-width: 756px) {
+	@media (max-width: 980px) {
+		.md {
+			position: relative;
+		}
+	}
+}
+@media screen and (1280px >= width > 576px) {
+	@media (576px >= width > 756px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (400px >= width > 358px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (756px >= width > 576px) {
+		.xl {
+			position: absolute;
+		}
+	}
+}
+@media screen and (576px < height <= 1280px) {
+	@media (756px < width <= 576px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (358px < width <= 400px) {
+		.xl {
+			position: relative;
+		}
+	}
+	@media (576px < width <= 756px) {
+		.xl {
+			position: absolute;
+		}
+	}
+}
+@media screen and (width <= 1200px) {
+	@media (width < 980px) {
+		.xd {
+			color: blue;
+		}
+	}
+	@media (width > 576px) {
+		.xd {
+			color: green;
+		}
+	}
+}
+@media print and (orientation: portrait) {
+	.md {
+		color: #000;
+	}
+}
+@media (min-width: 577px) and (hover: none) {
+	.md {
+		color: #000;
+	}
+}

@@ -78,3 +78,12 @@ describe("Check merge strategies", () => {
 		});
 	});
 });
+
+describe("Check edge cases", () => {
+	test("Global regex pattern, { atRulePattern: /(media|layer|supports)/g, flatten: false }", async () => {
+		await run("merge.out.css", {
+			atRulePattern: /(media|layer|supports)/g,
+			flatten: false,
+		});
+	});
+});
