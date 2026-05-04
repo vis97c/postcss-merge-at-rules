@@ -1,18 +1,16 @@
 {
-  "root": true,
-  "parserOptions": {
-    "requireConfigFile": false,
-    "sourceType": "module",
-    "ecmaVersion": 2020
-  },
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"requireConfigFile": false,
+		"sourceType": "module"
+	},
   "env": {
     "node": true,
     "es6": true,
     "jest": true
   },
   "plugins": [
-    "jsdoc",
-    "prettier"
+    "jsdoc"
   ],
   "extends": [
 		"@open-xamu-co/eslint-config",

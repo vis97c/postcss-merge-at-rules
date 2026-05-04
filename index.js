@@ -328,8 +328,7 @@ function recursivelyMergeAtRules(localRoot, atRulePattern, helpers) {
 
 		const atRule = /** @type {AtRule} */ (node);
 
-		if (!atRule.params || !atRule.nodes) return;
-		if (!matchesPattern(atRule.name, atRulePattern)) return;
+		if (!atRule.params || !atRule.nodes || !matchesPattern(atRule.name, atRulePattern)) return;
 
 		let query;
 
@@ -360,8 +359,7 @@ function recursivelyMergeAtRules(localRoot, atRulePattern, helpers) {
 
 		const atRule = /** @type {AtRule} */ (node);
 
-		if (!atRule.params || !atRule.nodes) return;
-		if (!matchesPattern(atRule.name, atRulePattern)) return;
+		if (!atRule.params || !atRule.nodes || !matchesPattern(atRule.name, atRulePattern)) return;
 
 		recursivelyMergeAtRules(atRule, atRulePattern, helpers);
 	});
@@ -430,24 +428,14 @@ function recursivelyNestAtRules(localRoot, atRulePattern, helpers) {
 				// Move all other rules in the group into this parent.
 				for (let i = 1; i < entries.length; i++) {
 					const { atRule, queryParams } = entries[i];
+					const remainingParams = queryParams.filter((p) => p !== base);
 
-					try {
-						const remainingParams = queryParams.filter((p) => p !== base);
-
-						if (remainingParams.length === 0) {
-							firstEntry.atRule.append(atRule.nodes);
-							atRule.remove();
-						} else {
-							atRule.assign({ params: joinParams(remainingParams, atRule.name) });
-							firstEntry.atRule.append(atRule);
-						}
-					} catch (error) {
-						localRoot.warn(
-							localRoot.root().toResult(),
-							`[Nest]: Invalid sibling "${atRule.params}" of "${firstEntry.atRule.params}"`,
-							{ node: atRule }
-						);
+					if (remainingParams.length === 0) {
+						firstEntry.atRule.append(atRule.nodes);
 						atRule.remove();
+					} else {
+						atRule.assign({ params: joinParams(remainingParams, atRule.name) });
+						firstEntry.atRule.append(atRule);
 					}
 				}
 
