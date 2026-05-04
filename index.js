@@ -375,87 +375,115 @@ function recursivelyMergeAtRules(localRoot, atRulePattern, helpers) {
  * @param {Helpers} helpers - postcss helpers
  */
 function recursivelyNestAtRules(localRoot, atRulePattern, helpers) {
-	localRoot.walkAtRules(atRulePattern, (atRule) => {
-		let atRuleIndex = localRoot.index(atRule);
+	/** @type {Map<string, {atRule: AtRule, queryParams: ReadonlyArray<string>}[]>} */
+	const groups = new Map();
 
-		// AtRule exists
-		if (atRuleIndex === -1 || !atRule.params || !atRule.nodes) return;
+	// Pass 1: Group matching direct children and recurse into all children.
+	localRoot.each((node) => {
+		if (node.type === "atrule" && matchesPattern(node.name, atRulePattern)) {
+			if (!node.params || !node.nodes) return;
+
+			try {
+				const query = joinParams(sortParams(node.params));
+				const queryParams = getParams(query);
+				const base = queryParams[0];
+
+				if (!groups.has(base)) groups.set(base, []);
+
+				groups.get(base)?.push({ atRule: node, queryParams });
+			} catch (error) {
+				localRoot.warn(localRoot.root().toResult(), `[Nest]: Invalid "${node.params}"`, {
+					node,
+				});
+				node.remove();
+			}
+		} else if ("nodes" in node && node.nodes) {
+			// Recurse into any container (Rule, Root, non-matching AtRule)
+			recursivelyNestAtRules(/** @type {AtRule|Root} */ (node), atRulePattern, helpers);
+		}
+	});
+
+	// Pass 2: Process each group of siblings.
+	for (const [base, entries] of groups) {
+		const firstEntry = entries[0];
+		const hasMultipleEntries = entries.length > 1;
+		const hasMultipleParams = firstEntry.queryParams.length > 1;
 
 		try {
-			let query = joinParams(sortParams(atRule.params));
-			// getParams returns a frozen cached array — copy before mutating.
-			const queryParams = getParams(query).slice();
+			if (hasMultipleEntries || hasMultipleParams) {
+				// Rewrite the first rule to be the parent of its own content (if it has multiple params).
+				if (hasMultipleParams) {
+					const remaining = firstEntry.queryParams.filter((p) => p !== base);
 
-			// rewrite
-			if (queryParams.length > 1) {
-				query = String(queryParams.shift());
-				atRule.assign({
-					params: query,
-					nodes: [atRule.clone({ params: joinParams(queryParams) })],
-				});
-			}
-
-			// nest siblings
-			localRoot.walkAtRules(atRulePattern, (innerAtRule) => {
-				const innerAtRuleIndex = localRoot.index(innerAtRule);
-
-				try {
-					const innerQuery = joinParams(sortParams(innerAtRule.params));
-
-					if (
-						innerAtRuleIndex === -1 ||
-						!innerAtRule.params ||
-						!innerAtRule.nodes ||
-						atRuleIndex === innerAtRuleIndex ||
-						!innerQuery.startsWith(query)
-					) {
-						return;
-					}
-
-					if (query === innerQuery) {
-						atRule.append(innerAtRule.nodes);
-					} else {
-						// getParams returns frozen array — filter returns a new array, safe to pass.
-						const innerQueryParams = getParams(innerQuery).filter((p) => p !== query);
-
-						atRule.append(innerAtRule.clone({ params: joinParams(innerQueryParams) }));
-					}
-				} catch (error) {
-					localRoot.warn(
-						localRoot.root().toResult(),
-						`[Nest]: Invalid sibling "${innerAtRule.params}" of "${atRule.params}"`,
-						{ node: innerAtRule }
-					);
+					firstEntry.atRule.assign({
+						params: base,
+						nodes: [
+							firstEntry.atRule.clone({
+								params: joinParams(remaining, firstEntry.atRule.name),
+							}),
+						],
+					});
+				} else {
+					firstEntry.atRule.assign({ params: base });
 				}
 
-				innerAtRule.remove();
-			});
+				// Move all other rules in the group into this parent.
+				for (let i = 1; i < entries.length; i++) {
+					const { atRule, queryParams } = entries[i];
 
-			recursivelyNestAtRules(atRule, atRulePattern, helpers);
+					try {
+						const remainingParams = queryParams.filter((p) => p !== base);
 
-			// merge into single atRule
+						if (remainingParams.length === 0) {
+							firstEntry.atRule.append(atRule.nodes);
+							atRule.remove();
+						} else {
+							atRule.assign({ params: joinParams(remainingParams, atRule.name) });
+							firstEntry.atRule.append(atRule);
+						}
+					} catch (error) {
+						localRoot.warn(
+							localRoot.root().toResult(),
+							`[Nest]: Invalid sibling "${atRule.params}" of "${firstEntry.atRule.params}"`,
+							{ node: atRule }
+						);
+						atRule.remove();
+					}
+				}
+
+				// Recurse into the modified rule to process newly nested content.
+				recursivelyNestAtRules(firstEntry.atRule, atRulePattern, helpers);
+			} else {
+				// Alone and single param - just recurse into it.
+				recursivelyNestAtRules(firstEntry.atRule, atRulePattern, helpers);
+			}
+
+			// Optimization: merge back if it only has one child atRule of the same name.
 			if (
-				atRule.nodes &&
-				atRule.nodes.length === 1 &&
-				atRule.nodes[0].type === "atrule" &&
-				/** @type {AtRule} */ (atRule.nodes[0]).name === "media"
+				firstEntry.atRule.nodes &&
+				firstEntry.atRule.nodes.length === 1 &&
+				firstEntry.atRule.nodes[0].type === "atrule" &&
+				/** @type {AtRule} */ (firstEntry.atRule.nodes[0]).name === firstEntry.atRule.name
 			) {
-				const singleAtRule = /** @type {AtRule} */ (atRule.nodes[0]);
+				const child = /** @type {AtRule} */ (firstEntry.atRule.nodes[0]);
 
-				atRule.assign({
-					params: joinParams([query, singleAtRule.params]),
-					nodes: singleAtRule.nodes,
+				firstEntry.atRule.assign({
+					params: joinParams(
+						[firstEntry.atRule.params, child.params],
+						firstEntry.atRule.name
+					),
+					nodes: child.nodes,
 				});
 			}
 		} catch (error) {
 			localRoot.warn(
 				localRoot.root().toResult(),
-				`[Nest]: Can't nest siblings to invalid "${atRule.params}"`,
-				{ node: atRule }
+				`[Nest]: Can't nest siblings to invalid "${firstEntry.atRule.params}"`,
+				{ node: firstEntry.atRule }
 			);
-			atRule.remove();
+			firstEntry.atRule.remove();
 		}
-	});
+	}
 }
 
 /**
