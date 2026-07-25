@@ -1,5 +1,12 @@
 PostCSS Merge At Rules
 
+## [2.0.1](https://github.com/vis97c/postcss-merge-at-rules/compare/v2.0.0...v2.0.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* add missing main endpoint ([a39cff3](https://github.com/vis97c/postcss-merge-at-rules/commit/a39cff3b6b227adf6a82a1bb9493982622b29888))
+
 # [2.0.0](https://github.com/vis97c/postcss-merge-at-rules/compare/v1.2.0...v2.0.0) (2026-05-04)
 
 
