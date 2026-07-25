@@ -21,6 +21,7 @@
     "url": "https://github.com/vis97c/postcss-merge-at-rules/issues"
   },
   "homepage": "https://github.com/vis97c/postcss-merge-at-rules",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js --ignore-path .prettierignore .",
     "test:update": "gulp",
