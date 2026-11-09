@@ -85,7 +85,7 @@ function getNumValues(param) {
 	const values = [];
 
 	for (const token of param.split(" ")) {
-		const num = parseFloat(token.replace(/\D/g, ""));
+		const num = parseFloat(token.replace(/[^\d.]/g, ""));
 
 		if (!isNaN(num)) values.push(num);
 	}

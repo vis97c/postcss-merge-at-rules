@@ -87,3 +87,13 @@ describe("Check edge cases", () => {
 		});
 	});
 });
+
+describe("Decimal media query values", () => {
+	test("Keeps a min/max range whose values have decimals", async () => {
+		const input = "@media (min-width: 23.4375rem) and (max-width: 47.999rem) { .a { color: red; } }";
+		const result = await postcss([plugin()]).process(input, { from: undefined });
+
+		expect(result.css).toContain("(min-width: 23.4375rem) and (max-width: 47.999rem)");
+		expect(result.css).toContain("color: red");
+	});
+});
